@@ -14,7 +14,7 @@ func MessagesHandler(client *whatsmeow.Client, m *events.Message) {
 	messageContext := &lib.MessageContext{
 		Raw:    m.Message,
 		Client: client,
-		Info: &m.Info,
+		Info:   &m.Info,
 	}
 
 	cmd := commands.FindCommand(messageContext.GetCommandName())
@@ -22,11 +22,12 @@ func MessagesHandler(client *whatsmeow.Client, m *events.Message) {
 		err := cmd.Action(messageContext)
 		if err != nil {
 			client.SendMessage(context.Background(), m.Info.Chat, &proto.Message{
-				Conversation: lib.ToStringPointer(err.Error()),
 				ExtendedTextMessage: &proto.ExtendedTextMessage{
 					ContextInfo: &proto.ContextInfo{
 						QuotedMessage: m.Message,
+						StanzaId:      &m.Info.ID,
 					},
+					Text: lib.ToStringPointer(err.Error()),
 				},
 			})
 		}

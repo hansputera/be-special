@@ -15,11 +15,12 @@ func PingCommand() *types.Command {
 		Aliases:     []string{"test"},
 		Action: func(ctx *lib.MessageContext) error {
 			ctx.Client.SendMessage(context.Background(), ctx.Info.Chat, &proto.Message{
-				Conversation: lib.ToStringPointer("Pong!"),
 				ExtendedTextMessage: &proto.ExtendedTextMessage{
 					ContextInfo: &proto.ContextInfo{
+						StanzaId:      &ctx.Info.ID,
 						QuotedMessage: ctx.Raw,
 					},
+					Text: lib.ToStringPointer("Pong!"),
 				},
 			})
 			return nil

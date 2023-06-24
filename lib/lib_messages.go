@@ -41,7 +41,11 @@ func (ctx *MessageContext) ExtractArgs() []string {
 }
 
 func (ctx *MessageContext) GetCommandName() string {
-	return ctx.ExtractRawArgs()[0]
+	args := ctx.ExtractRawArgs()
+	if len(args) < 1 {
+		return ""
+	}
+	return args[0]
 }
 
 func ToStringPointer(str string) *string {
