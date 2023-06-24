@@ -1,16 +1,25 @@
 package types
 
 import (
-	"go.mau.fi/whatsmeow"
-	"go.mau.fi/whatsmeow/binary/proto"
+	"github.com/hansputera/be-special/lib"
 )
 
 type Command struct {
 	Name        string
 	Description string
 	Aliases     []string
-	Action      func(client *whatsmeow.Client, m *proto.Message) error
+	Action      func(ctx *lib.MessageContext) error
 
 	OnlyGroup bool
 	OnlyPM    bool
+}
+
+func (c *Command) ContainAlias(alias string) bool {
+	for _, aliase := range c.Aliases {
+		if aliase == alias {
+			return true
+		}
+	}
+
+	return false
 }
