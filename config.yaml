@@ -1,0 +1,3 @@
+bot_log_level: DEBUG
+bot_auth_file: .databases/auth.db
+bot_prefixes: ['!', '$$']
