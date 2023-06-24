@@ -9,6 +9,7 @@ import (
 
 var registeredCommands = []*types.Command{
 	commons.PingCommand(),
+	commons.StatsCommand(),
 }
 
 func FindCommand(cmdOrAlias string) *types.Command {
